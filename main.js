@@ -29,19 +29,20 @@ scene.add(torus);
 
 // Lights
 
-const pointLight = new THREE.PointLight(0xffffff);
+const pointLight = new THREE.PointLight(0x6f0480);
 pointLight.position.set(5, 5, 5);
+scene.add(pointLight);
 
-const ambientLight = new THREE.AmbientLight(0xffffff);
-scene.add(pointLight, ambientLight);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+scene.add(ambientLight);
 
 // Helpers
 
-// const lightHelper = new THREE.PointLightHelper(pointLight)
-// const gridHelper = new THREE.GridHelper(200, 50);
-// scene.add(lightHelper, gridHelper)
+const lightHelper = new THREE.PointLightHelper(pointLight)
+const gridHelper = new THREE.GridHelper(200, 50);
+scene.add(lightHelper, gridHelper)
 
-// const controls = new OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement);
 
 function addStar() {
   const geometry = new THREE.SphereGeometry(0.25, 24, 24);
@@ -65,12 +66,11 @@ scene.background = spaceTexture;
 
 // Avatar
 
-const jeffTexture = new THREE.TextureLoader().load('jeff.png');
+const gongonTexture = new THREE.TextureLoader().load('gongon.jpg');
 
-const jeff = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshBasicMaterial({ map: jeffTexture }));
+const gongon = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshBasicMaterial({ map: gongonTexture }));
 
-scene.add(jeff);
-
+scene.add(gongon);
 // Moon
 
 const moonTexture = new THREE.TextureLoader().load('moon.jpg');
@@ -89,8 +89,8 @@ scene.add(moon);
 moon.position.z = 30;
 moon.position.setX(-10);
 
-jeff.position.z = -5;
-jeff.position.x = 2;
+gongon.position.z = -5;
+gongon.position.x = 2;
 
 // Scroll Animation
 
@@ -100,16 +100,16 @@ function moveCamera() {
   moon.rotation.y += 0.075;
   moon.rotation.z += 0.05;
 
-  jeff.rotation.y += 0.01;
-  jeff.rotation.z += 0.01;
+  gongon.rotation.y += 0.01;
+  gongon.rotation.z += 0.01;
 
   camera.position.z = t * -0.01;
   camera.position.x = t * -0.0002;
   camera.rotation.y = t * -0.0002;
 }
 
-document.body.onscroll = moveCamera;
-moveCamera();
+// document.body.onscroll = moveCamera;
+// moveCamera();
 
 // Animation Loop
 
@@ -122,7 +122,9 @@ function animate() {
 
   moon.rotation.x += 0.005;
 
-  // controls.update();
+  pointLight.position.x += 0.003
+
+  controls.update();
 
   renderer.render(scene, camera);
 }
